@@ -10,7 +10,8 @@
 #ifndef SOIL_LOG_H
 #define SOIL_LOG_H
 
-#include "LogWriter.h"
+#include "soil/LogWriter.h"
+#include "soil/LogFormat.h"
 #include <string>
 #include <sstream>
 
@@ -33,7 +34,7 @@ private:
     class Stream
     {
     public:
-        Stream(LogWriter& writer, const std::string& level, const std::string& component);
+        Stream(LogWriter& writer, const std::string& header);
         Stream(const Stream& stream);
         virtual ~Stream();
 
@@ -68,11 +69,12 @@ public:
     Log(LogWriter& writer);
 
     void setWriter(LogWriter& writer);
+    void setFormat(const std::string& format);
 
     void setLevel(Level level);
     Level getLevel() const;
 
-    Stream getStream(Level level = INFO, const std::string& component = "");
+    Stream getStream(Level level, const std::string& component = "");
 
     Stream error(const std::string& component = "");
     Stream warning(const std::string& component = "");
@@ -88,6 +90,7 @@ private:
     static NullWriter mNullWriter;
     LogWriter* mWriter;
     Level mLevel;
+    LogFormat mFormat;
 };
 
 } // namespace soil

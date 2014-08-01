@@ -23,6 +23,10 @@ void Log::setWriter(LogWriter& writer)
     mWriter = &writer;
 }
 
+void Log::setFormat(const std::string& format)
+{
+}
+
 void Log::setLevel(Log::Level level)
 {
     mLevel = level;
@@ -35,7 +39,7 @@ Log::Level Log::getLevel() const
 
 Log::Stream Log::getStream(Log::Level level, const std::string& component)
 {
-    return Stream(isLevelEnabled(level) ? *mWriter : mNullWriter, levelToString(level), component);
+    return Stream(isLevelEnabled(level) ? *mWriter : mNullWriter, mFormat.header(levelToString(level), component));
 }
 
 Log::Stream Log::error(const std::string& component)
@@ -102,12 +106,10 @@ const std::string& Log::levelToString(Level level)
 }
 
 
-Log::Stream::Stream(LogWriter& writer, const std::string& level, const std::string& component)
+Log::Stream::Stream(LogWriter& writer, const std::string& header)
     : mWriter(writer)
 {
-    mMessage << level << ": ";
-    if (!component.empty())
-        mMessage << "[" << component << "] ";
+    mMessage << header;
 }
 
 Log::Stream::~Stream()
