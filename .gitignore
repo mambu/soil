@@ -21,4 +21,6 @@
 *.app
 
 # Netbeans project
-nbproject/private/*
+nbproject/private/
+build/
+dist/
