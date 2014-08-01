@@ -7,6 +7,7 @@
       <logicalFolder name="sdkcomp" displayName="soil" projectFiles="true">
         <itemPath>include/soil/AnsiTerm.h</itemPath>
         <itemPath>include/soil/Configuration.h</itemPath>
+        <itemPath>include/soil/ConsoleLogWriter.h</itemPath>
         <itemPath>include/soil/Log.h</itemPath>
         <itemPath>include/soil/LogWriter.h</itemPath>
         <itemPath>include/soil/Logger.h</itemPath>
@@ -49,6 +50,9 @@
                      projectFiles="true"
                      kind="TEST">
         <itemPath>tests/SingletonTest.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="TestApp" projectFiles="true" kind="TEST">
+        <itemPath>tests/TestApp.cpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -158,11 +162,28 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/testapp</output>
+        </linkerTool>
+      </folder>
       <item path="include/NumType.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Configuration.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/soil/ConsoleLogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Log.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -185,6 +206,8 @@
       <item path="tests/LoggerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/SingletonTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/TestApp.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="3">
@@ -292,11 +315,28 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/testapp</output>
+        </linkerTool>
+      </folder>
       <item path="include/NumType.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Configuration.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/soil/ConsoleLogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Log.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -319,6 +359,8 @@
       <item path="tests/LoggerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/SingletonTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/TestApp.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

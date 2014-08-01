@@ -47,7 +47,8 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f2 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f3
+	${TESTDIR}/TestFiles/f3 \
+	${TESTDIR}/TestFiles/testapp
 
 # C Compiler Flags
 CFLAGS=
@@ -111,6 +112,10 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/SingletonTest.o ${OBJECTFILES:%.o=%_no
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
+${TESTDIR}/TestFiles/testapp: ${TESTDIR}/tests/TestApp.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/testapp $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+
 
 ${TESTDIR}/tests/AnsiTermTest.o: tests/AnsiTermTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
@@ -134,6 +139,12 @@ ${TESTDIR}/tests/SingletonTest.o: tests/SingletonTest.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/SingletonTest.o tests/SingletonTest.cpp
+
+
+${TESTDIR}/tests/TestApp.o: tests/TestApp.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/TestApp.o tests/TestApp.cpp
 
 
 ${OBJECTDIR}/src/AnsiTerm_nomain.o: ${OBJECTDIR}/src/AnsiTerm.o src/AnsiTerm.cpp 
@@ -183,6 +194,7 @@ ${OBJECTDIR}/src/LogWriter_nomain.o: ${OBJECTDIR}/src/LogWriter.o src/LogWriter.
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
+	    ${TESTDIR}/TestFiles/testapp || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi
