@@ -4,7 +4,7 @@
  */
 
 #ifndef SOIL_SINGLETON_H
-#define	SOIL_SINGLETON_H
+#define SOIL_SINGLETON_H
 
 namespace soil
 {

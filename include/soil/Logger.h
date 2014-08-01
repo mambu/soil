@@ -4,7 +4,7 @@
  */
 
 #ifndef SOIL_LOGGER_H
-#define	SOIL_LOGGER_H
+#define SOIL_LOGGER_H
 
 #include "soil/Log.h"
 #include "soil/Singleton.h"

@@ -10,6 +10,7 @@
         <itemPath>include/soil/Log.h</itemPath>
         <itemPath>include/soil/LogWriter.h</itemPath>
         <itemPath>include/soil/Logger.h</itemPath>
+        <itemPath>include/NumType.h</itemPath>
         <itemPath>include/soil/Singleton.h</itemPath>
       </logicalFolder>
     </logicalFolder>
@@ -157,6 +158,8 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
+      <item path="include/NumType.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Configuration.h" ex="false" tool="3" flavor2="0">
@@ -280,6 +283,8 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
+      <item path="include/NumType.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Configuration.h" ex="false" tool="3" flavor2="0">

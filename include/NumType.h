@@ -4,7 +4,7 @@
  */
 
 #ifndef SOIL_NUMTYPE_H
-#define	SOIL_NUMTYPE_H
+#define SOIL_NUMTYPE_H
 
 #include <cstdint>
 
