@@ -48,3 +48,13 @@ TEST(LogTest, test3)
 
     ASSERT_EQ("", logWriter.mMessage);
 }
+
+TEST(LogTest, test4)
+{
+    TestLogWriter logWriter;
+    Log log(logWriter);
+    log.setLevel(Log::VERBOSE);
+    log.verbose() << "hello";
+
+    ASSERT_EQ("VERBOSE: hello\n", logWriter.mMessage);
+}
