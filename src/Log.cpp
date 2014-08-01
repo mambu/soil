@@ -112,7 +112,6 @@ Log::Stream::Stream(LogWriter& writer, const std::string& level, const std::stri
 
 Log::Stream::~Stream()
 {
-    mMessage << std::endl;
     mWriter.write(mMessage.str());
 }
 

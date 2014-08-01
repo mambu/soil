@@ -37,7 +37,7 @@ TEST(LogTest, test2)
     Log log(logWriter);
     log.info() << "hello" << " " << "world";
 
-    ASSERT_EQ("INFO: hello world\n", logWriter.mMessage);
+    ASSERT_EQ("INFO: hello world", logWriter.mMessage);
 }
 
 TEST(LogTest, test3)
@@ -56,5 +56,5 @@ TEST(LogTest, test4)
     log.setLevel(Log::VERBOSE);
     log.verbose() << "hello";
 
-    ASSERT_EQ("VERBOSE: hello\n", logWriter.mMessage);
+    ASSERT_EQ("VERBOSE: hello", logWriter.mMessage);
 }

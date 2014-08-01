@@ -8,9 +8,11 @@
         <itemPath>include/soil/AnsiTerm.h</itemPath>
         <itemPath>include/soil/Configuration.h</itemPath>
         <itemPath>include/soil/ConsoleLogWriter.h</itemPath>
+        <itemPath>include/soil/FileLogWriter.h</itemPath>
         <itemPath>include/soil/Log.h</itemPath>
         <itemPath>include/soil/LogWriter.h</itemPath>
         <itemPath>include/soil/Logger.h</itemPath>
+        <itemPath>include/soil/MultiLogWriter.h</itemPath>
         <itemPath>include/NumType.h</itemPath>
         <itemPath>include/soil/Singleton.h</itemPath>
       </logicalFolder>
@@ -23,8 +25,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/AnsiTerm.cpp</itemPath>
+      <itemPath>src/FileLogWriter.cpp</itemPath>
       <itemPath>src/Log.cpp</itemPath>
-      <itemPath>src/LogWriter.cpp</itemPath>
+      <itemPath>src/MultiLogWriter.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -185,19 +188,25 @@
       </item>
       <item path="include/soil/ConsoleLogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/soil/FileLogWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/Log.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/LogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Logger.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/soil/MultiLogWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/AnsiTerm.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/FileLogWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Log.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/LogWriter.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/MultiLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/AnsiTermTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -338,19 +347,25 @@
       </item>
       <item path="include/soil/ConsoleLogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/soil/FileLogWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/Log.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/LogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Logger.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/soil/MultiLogWriter.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/AnsiTerm.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/FileLogWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Log.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/LogWriter.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/MultiLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/AnsiTermTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

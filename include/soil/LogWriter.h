@@ -1,7 +1,11 @@
-/* 
- * File:   LogWriter.h
- * Author: marco
- */
+/*
+ * File: LogWriter.h
+ *
+ * Copyright (c) 2014 Marco Ambu
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license.  See the LICENSE file for details.
+*/
 
 #ifndef SOIL_LOGWRITER_H
 #define SOIL_LOGWRITER_H
@@ -17,15 +21,6 @@ public:
     virtual ~LogWriter() {}
 
     virtual void write(const std::string& message) = 0;
-};
-
-class LogMultiWriter : public LogWriter
-{
-public:
-    void add(LogWriter& writer);
-    void remove(LogWriter& writer);
-
-    void write(const std::string& message);
 };
 
 } // namespace soil

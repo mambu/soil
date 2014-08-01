@@ -36,8 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/AnsiTerm.o \
+	${OBJECTDIR}/src/FileLogWriter.o \
 	${OBJECTDIR}/src/Log.o \
-	${OBJECTDIR}/src/LogWriter.o
+	${OBJECTDIR}/src/MultiLogWriter.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -81,15 +82,20 @@ ${OBJECTDIR}/src/AnsiTerm.o: src/AnsiTerm.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/AnsiTerm.o src/AnsiTerm.cpp
 
+${OBJECTDIR}/src/FileLogWriter.o: src/FileLogWriter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FileLogWriter.o src/FileLogWriter.cpp
+
 ${OBJECTDIR}/src/Log.o: src/Log.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Log.o src/Log.cpp
 
-${OBJECTDIR}/src/LogWriter.o: src/LogWriter.cpp 
+${OBJECTDIR}/src/MultiLogWriter.o: src/MultiLogWriter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogWriter.o src/LogWriter.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/MultiLogWriter.o src/MultiLogWriter.cpp
 
 # Subprojects
 .build-subprojects:
@@ -160,6 +166,19 @@ ${OBJECTDIR}/src/AnsiTerm_nomain.o: ${OBJECTDIR}/src/AnsiTerm.o src/AnsiTerm.cpp
 	    ${CP} ${OBJECTDIR}/src/AnsiTerm.o ${OBJECTDIR}/src/AnsiTerm_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/FileLogWriter_nomain.o: ${OBJECTDIR}/src/FileLogWriter.o src/FileLogWriter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/FileLogWriter.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FileLogWriter_nomain.o src/FileLogWriter.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/FileLogWriter.o ${OBJECTDIR}/src/FileLogWriter_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/Log_nomain.o: ${OBJECTDIR}/src/Log.o src/Log.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/Log.o`; \
@@ -173,17 +192,17 @@ ${OBJECTDIR}/src/Log_nomain.o: ${OBJECTDIR}/src/Log.o src/Log.cpp
 	    ${CP} ${OBJECTDIR}/src/Log.o ${OBJECTDIR}/src/Log_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/LogWriter_nomain.o: ${OBJECTDIR}/src/LogWriter.o src/LogWriter.cpp 
+${OBJECTDIR}/src/MultiLogWriter_nomain.o: ${OBJECTDIR}/src/MultiLogWriter.o src/MultiLogWriter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/LogWriter.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/MultiLogWriter.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogWriter_nomain.o src/LogWriter.cpp;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/MultiLogWriter_nomain.o src/MultiLogWriter.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/LogWriter.o ${OBJECTDIR}/src/LogWriter_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/MultiLogWriter.o ${OBJECTDIR}/src/MultiLogWriter_nomain.o;\
 	fi
 
 # Run Test Targets

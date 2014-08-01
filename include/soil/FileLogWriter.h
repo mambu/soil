@@ -1,5 +1,5 @@
 /* 
- * File:   ConsoleLogWriter.h
+ * File: FileLogWriter.h
  *
  * Copyright (c) 2014 Marco Ambu
  *
@@ -7,25 +7,30 @@
  * of the MIT license.  See the LICENSE file for details.
  */
 
-#ifndef SOIL_CONSOLELOGWRITER_H
-#define SOIL_CONSOLELOGWRITER_H
+#ifndef SOIL_FILELOGWRITER_H
+#define SOIL_FILELOGWRITER_H
 
 #include "soil/LogWriter.h"
-#include <iostream>
+#include <fstream>
 
 namespace soil
 {
 
-class ConsoleLogWriter : public LogWriter
+class FileLogWriter : public LogWriter
 {
 public:
+    FileLogWriter(const std::string& filename, bool append = false);
+
     inline void write(const std::string& message)
     {
-        std::cout << message;
+        mFile << message;
     }
+
+private:
+    std::ofstream mFile;
 };
 
 } // namespace soil
 
-#endif // SOIL_CONSOLELOGWRITER_H
+#endif // SOIL_FILELOGWRITER_H
 
