@@ -213,6 +213,15 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <folder path="TestFiles">
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
+            <linkerLibLibItem>gtest_main</linkerLibLibItem>
+            <linkerLibLibItem>gtest</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
