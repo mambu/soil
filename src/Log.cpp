@@ -1,4 +1,5 @@
 #include "soil/Log.h"
+#include "soil/LogFormat.h"
 #include <cassert>
 
 namespace soil
@@ -25,6 +26,7 @@ void Log::setWriter(LogWriter& writer)
 
 void Log::setFormat(const std::string& format)
 {
+    mFormat.setFormat(format);
 }
 
 void Log::setLevel(Log::Level level)

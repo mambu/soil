@@ -58,3 +58,18 @@ TEST(LogTest, test4)
 
     ASSERT_EQ("VERBOSE: hello", logWriter.mMessage);
 }
+
+TEST(LogTest, testFormat)
+{
+    TestLogWriter logWriter;
+    Log log(logWriter);
+    log.setFormat("%l - %c: ");
+    log.info("comp") << "hello";
+
+    ASSERT_EQ("INFO - comp: hello", logWriter.mMessage);
+
+    log.setFormat("%l - %(_) c");
+    log.info("comp") << "hello";
+
+    ASSERT_EQ("INFO - (comp) hello", logWriter.mMessage);
+}

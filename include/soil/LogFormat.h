@@ -10,8 +10,7 @@
 #ifndef SOIL_LOGFORMAT_H
 #define SOIL_LOGFORMAT_H
 
-#include <string>
-#include <ostream>
+#include "soil/FormatString.h"
 
 namespace soil
 {
@@ -19,11 +18,14 @@ namespace soil
 class LogFormat
 {
 public:
-    LogFormat(const std::string& format = "");
+    LogFormat(const std::string& format = "%l: %[_] c");
+
+    void setFormat(const std::string& format);
+
     std::string header(const std::string& level, const std::string& component);
 
 private:
-    std::string mFormat;
+    FormatString mFormat;
 };
 
 } // namespace soil
