@@ -10,30 +10,24 @@
 #ifndef SOIL_LOGFORMAT_H
 #define SOIL_LOGFORMAT_H
 
-#include "soil/FormatString.h"
-#include <map>
+#include "soil/Format.h"
 
 namespace soil
 {
 
-class LogFormat
+class LogLevel;
+class LogComponent;
+class LogMessage;
+
+class LogFormat : public Format
 {
 public:
     LogFormat(const std::string& format = "%l: %c %m");
-
-    void setFormat(const std::string& format);
-
-    std::string get();
-
-private:
-    FormatString mFormat;
-    typedef std::map<char, std::string> Values;
-    Values mValues;
-
-private:
-    template <class T>
-    friend LogFormat& operator<<(LogFormat& format, const T& item);
 };
+
+LogFormat& operator<<(LogFormat& format, const LogLevel& item);
+LogFormat& operator<<(LogFormat& format, const LogComponent& item);
+LogFormat& operator<<(LogFormat& format, const LogMessage& item);
 
 } // namespace soil
 

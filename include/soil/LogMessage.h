@@ -1,5 +1,5 @@
 /*
- * File: LogComponent.h
+ * LogMessage.h
  *
  * Copyright (c) 2014 Marco Ambu
  *
@@ -7,26 +7,26 @@
  * of the MIT license.  See the LICENSE file for details.
  */
 
-#ifndef SOIL_LOGCOMPONENT_H
-#define SOIL_LOGCOMPONENT_H
+#ifndef SOIL_LOGMESSAGE_H
+#define SOIL_LOGMESSAGE_H
 
 #include <string>
 
 namespace soil
 {
 
-class LogComponent : public std::string
+class LogMessage : public std::string
 {
 public:
-    LogComponent(const char* comp = "")
+    LogMessage(const char* comp = "")
         : std::string(comp)
     {}
-    LogComponent(const std::string& comp)
+    LogMessage(const std::string& comp)
         : std::string(comp)
     {}
 };
 
 } // namespace soil
 
-#endif // SOIL_LOGCOMPONENT_H
+#endif // SOIL_LOGMESSAGE_H
 

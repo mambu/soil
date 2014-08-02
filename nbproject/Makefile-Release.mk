@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/AnsiTerm.o \
 	${OBJECTDIR}/src/FileLogWriter.o \
+	${OBJECTDIR}/src/Format.o \
 	${OBJECTDIR}/src/FormatString.o \
 	${OBJECTDIR}/src/Log.o \
 	${OBJECTDIR}/src/LogFormat.o \
@@ -91,6 +92,11 @@ ${OBJECTDIR}/src/FileLogWriter.o: src/FileLogWriter.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FileLogWriter.o src/FileLogWriter.cpp
 
+${OBJECTDIR}/src/Format.o: src/Format.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Format.o src/Format.cpp
+
 ${OBJECTDIR}/src/FormatString.o: src/FormatString.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -125,7 +131,7 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/AnsiTermTest.o ${OBJECTFILES:%.o=%_nom
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/FormatStringTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/FormatStringTest.o ${TESTDIR}/tests/FormatTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
@@ -133,7 +139,7 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/LoggerTest.o ${OBJECTFILES:%.o=%_nomai
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/LogFormatTest.o ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
@@ -158,10 +164,22 @@ ${TESTDIR}/tests/FormatStringTest.o: tests/FormatStringTest.cpp
 	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FormatStringTest.o tests/FormatStringTest.cpp
 
 
+${TESTDIR}/tests/FormatTest.o: tests/FormatTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FormatTest.o tests/FormatTest.cpp
+
+
 ${TESTDIR}/tests/LoggerTest.o: tests/LoggerTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LoggerTest.o tests/LoggerTest.cpp
+
+
+${TESTDIR}/tests/LogFormatTest.o: tests/LogFormatTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -I. -I. -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogFormatTest.o tests/LogFormatTest.cpp
 
 
 ${TESTDIR}/tests/LogTest.o: tests/LogTest.cpp 
@@ -206,6 +224,19 @@ ${OBJECTDIR}/src/FileLogWriter_nomain.o: ${OBJECTDIR}/src/FileLogWriter.o src/Fi
 	    $(COMPILE.cc) -O2 -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FileLogWriter_nomain.o src/FileLogWriter.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/FileLogWriter.o ${OBJECTDIR}/src/FileLogWriter_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/Format_nomain.o: ${OBJECTDIR}/src/Format.o src/Format.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/Format.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Format_nomain.o src/Format.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/Format.o ${OBJECTDIR}/src/Format_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/FormatString_nomain.o: ${OBJECTDIR}/src/FormatString.o src/FormatString.cpp 

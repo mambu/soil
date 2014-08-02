@@ -1,4 +1,5 @@
 #include "soil/Log.h"
+#include "soil/LogMessage.h"
 #include <cassert>
 
 namespace soil
@@ -87,7 +88,7 @@ Log::Stream::Stream(LogWriter& writer, LogFormat& format)
 
 Log::Stream::~Stream()
 {
-    mFormat << mMessage.str();
+    mFormat << LogMessage(mMessage.str());
     mWriter.write(mFormat.get());
 }
 

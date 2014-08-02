@@ -9,11 +9,13 @@
         <itemPath>include/soil/Configuration.h</itemPath>
         <itemPath>include/soil/ConsoleLogWriter.h</itemPath>
         <itemPath>include/soil/FileLogWriter.h</itemPath>
+        <itemPath>include/soil/Format.h</itemPath>
         <itemPath>include/soil/FormatString.h</itemPath>
         <itemPath>include/soil/Log.h</itemPath>
         <itemPath>include/soil/LogComponent.h</itemPath>
         <itemPath>include/soil/LogFormat.h</itemPath>
         <itemPath>include/soil/LogLevel.h</itemPath>
+        <itemPath>include/soil/LogMessage.h</itemPath>
         <itemPath>include/soil/LogWriter.h</itemPath>
         <itemPath>include/soil/Logger.h</itemPath>
         <itemPath>include/soil/MultiLogWriter.h</itemPath>
@@ -30,6 +32,7 @@
                    projectFiles="true">
       <itemPath>src/AnsiTerm.cpp</itemPath>
       <itemPath>src/FileLogWriter.cpp</itemPath>
+      <itemPath>src/Format.cpp</itemPath>
       <itemPath>src/FormatString.cpp</itemPath>
       <itemPath>src/Log.cpp</itemPath>
       <itemPath>src/LogFormat.cpp</itemPath>
@@ -47,10 +50,11 @@
         <itemPath>tests/AnsiTermTest.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f6"
-                     displayName="FormatStringTest"
+                     displayName="FormatTest"
                      projectFiles="true"
                      kind="TEST">
         <itemPath>tests/FormatStringTest.cpp</itemPath>
+        <itemPath>tests/FormatTest.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f4"
                      displayName="LoggerTest"
@@ -59,6 +63,7 @@
         <itemPath>tests/LoggerTest.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="LogTest" projectFiles="true" kind="TEST">
+        <itemPath>tests/LogFormatTest.cpp</itemPath>
         <itemPath>tests/LogTest.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
@@ -216,6 +221,8 @@
       </item>
       <item path="include/soil/FileLogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/soil/Format.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/FormatString.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Log.h" ex="false" tool="3" flavor2="0">
@@ -225,6 +232,8 @@
       <item path="include/soil/LogFormat.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/LogLevel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/soil/LogMessage.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/LogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -240,6 +249,8 @@
       </item>
       <item path="src/FileLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Format.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/FormatString.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Log.cpp" ex="false" tool="1" flavor2="0">
@@ -253,6 +264,10 @@
       <item path="tests/AnsiTermTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/FormatStringTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/FormatTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/LogFormatTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/LogTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -406,6 +421,8 @@
       </item>
       <item path="include/soil/FileLogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/soil/Format.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/soil/FormatString.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Log.h" ex="false" tool="3" flavor2="0">
@@ -415,6 +432,8 @@
       <item path="include/soil/LogFormat.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/LogLevel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/soil/LogMessage.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/LogWriter.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -430,6 +449,8 @@
       </item>
       <item path="src/FileLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Format.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/FormatString.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Log.cpp" ex="false" tool="1" flavor2="0">
@@ -443,6 +464,10 @@
       <item path="tests/AnsiTermTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/FormatStringTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/FormatTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/LogFormatTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/LogTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
