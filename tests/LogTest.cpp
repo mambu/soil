@@ -27,7 +27,7 @@ TEST(LogTest, test1)
     Log log(logWriter);
     ASSERT_EQ(LogLevel::Info, log.getLevel());
 
-    log.setLevel(LogLevel::DEBUG);
+    log.setLevel(LogLevel::Debug);
     ASSERT_EQ(LogLevel::Debug, log.getLevel());
 }
 
@@ -53,7 +53,7 @@ TEST(LogTest, test4)
 {
     TestLogWriter logWriter;
     Log log(logWriter);
-    log.setLevel(LogLevel::VERBOSE);
+    log.setLevel(LogLevel::Verbose);
     log.verbose() << "hello";
 
     ASSERT_EQ("VERBOSE:  hello", logWriter.mMessage);

@@ -17,7 +17,7 @@ namespace soil
 
 class LogLevel
 {
-public:
+private:
     enum Level
     {
         ERROR,
@@ -27,11 +27,12 @@ public:
         DEBUG
     };
 
-public:
-    LogLevel(Level l = INFO)
+private:
+    LogLevel(Level l)
         : mLevel(l)
     {}
 
+public:
     bool operator==(const LogLevel& l) const;
     bool operator!=(const LogLevel& l) const;
     bool operator<=(const LogLevel& l) const;

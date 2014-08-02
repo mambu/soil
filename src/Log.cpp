@@ -9,11 +9,13 @@ Log::NullWriter Log::mNullWriter;
 
 Log::Log()
     : mWriter(&mNullWriter)
+    , mLevel(LogLevel::Info)
 {
 }
 
 Log::Log(LogWriter& writer)
     : mWriter(&writer)
+    , mLevel(LogLevel::Info)
 {
 }
 
@@ -25,11 +27,6 @@ void Log::setWriter(LogWriter& writer)
 void Log::setFormat(const std::string& format)
 {
     mFormat.setFormat(format);
-}
-
-void Log::setLevel(LogLevel::Level level)
-{
-    mLevel = level;
 }
 
 void Log::setLevel(const LogLevel& level)
@@ -51,12 +48,12 @@ Log::Stream Log::getStream(const LogLevel& level, const LogComponent& component)
 
 Log::Stream Log::error(const LogComponent& component)
 {
-    return getStream(LogLevel::ERROR, component);
+    return getStream(LogLevel::Error, component);
 }
 
 Log::Stream Log::warning(const LogComponent& component)
 {
-    return getStream(LogLevel::WARNING, component);
+    return getStream(LogLevel::Warning, component);
 }
 
 Log::Stream Log::info(const LogComponent& component)
@@ -66,12 +63,12 @@ Log::Stream Log::info(const LogComponent& component)
 
 Log::Stream Log::verbose(const LogComponent& component)
 {
-    return getStream(LogLevel::VERBOSE, component);
+    return getStream(LogLevel::Verbose, component);
 }
 
 Log::Stream Log::debug(const LogComponent& component)
 {
-    return getStream(LogLevel::DEBUG, component);
+    return getStream(LogLevel::Debug, component);
 }
 
 bool Log::isLevelEnabled(const LogLevel& level) const

@@ -64,7 +64,6 @@ public:
     void setWriter(LogWriter& writer);
     void setFormat(const std::string& format);
 
-    void setLevel(LogLevel::Level level);
     void setLevel(const LogLevel& level);
     const LogLevel& getLevel() const;
 
