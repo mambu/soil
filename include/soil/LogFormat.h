@@ -11,6 +11,7 @@
 #define SOIL_LOGFORMAT_H
 
 #include "soil/FormatString.h"
+#include <map>
 
 namespace soil
 {
@@ -18,14 +19,20 @@ namespace soil
 class LogFormat
 {
 public:
-    LogFormat(const std::string& format = "%l: %[_] c");
+    LogFormat(const std::string& format = "%l: %c %m");
 
     void setFormat(const std::string& format);
 
-    std::string header(const std::string& level, const std::string& component);
+    std::string get();
 
 private:
     FormatString mFormat;
+    typedef std::map<char, std::string> Values;
+    Values mValues;
+
+private:
+    template <class T>
+    friend LogFormat& operator<<(LogFormat& format, const T& item);
 };
 
 } // namespace soil

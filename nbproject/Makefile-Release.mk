@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/FormatString.o \
 	${OBJECTDIR}/src/Log.o \
 	${OBJECTDIR}/src/LogFormat.o \
+	${OBJECTDIR}/src/LogLevel.o \
 	${OBJECTDIR}/src/MultiLogWriter.o
 
 # Test Directory
@@ -104,6 +105,11 @@ ${OBJECTDIR}/src/LogFormat.o: src/LogFormat.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogFormat.o src/LogFormat.cpp
+
+${OBJECTDIR}/src/LogLevel.o: src/LogLevel.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogLevel.o src/LogLevel.cpp
 
 ${OBJECTDIR}/src/MultiLogWriter.o: src/MultiLogWriter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -239,6 +245,19 @@ ${OBJECTDIR}/src/LogFormat_nomain.o: ${OBJECTDIR}/src/LogFormat.o src/LogFormat.
 	    $(COMPILE.cc) -O2 -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogFormat_nomain.o src/LogFormat.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/LogFormat.o ${OBJECTDIR}/src/LogFormat_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/LogLevel_nomain.o: ${OBJECTDIR}/src/LogLevel.o src/LogLevel.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/LogLevel.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogLevel_nomain.o src/LogLevel.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/LogLevel.o ${OBJECTDIR}/src/LogLevel_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/MultiLogWriter_nomain.o: ${OBJECTDIR}/src/MultiLogWriter.o src/MultiLogWriter.cpp 

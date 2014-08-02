@@ -12,6 +12,8 @@
 
 #include "soil/LogWriter.h"
 #include "soil/LogFormat.h"
+#include "soil/LogLevel.h"
+#include "soil/LogComponent.h"
 #include <string>
 #include <sstream>
 
@@ -20,21 +22,11 @@ namespace soil
 
 class Log
 {
-public:
-    enum Level
-    {
-        ERROR,
-        WARNING,
-        INFO,
-        VERBOSE,
-        DEBUG
-    };
-
 private:
     class Stream
     {
     public:
-        Stream(LogWriter& writer, const std::string& header);
+        Stream(LogWriter& writer, LogFormat& format);
         Stream(const Stream& stream);
         virtual ~Stream();
 
@@ -53,6 +45,7 @@ private:
 
     private:
         LogWriter& mWriter;
+        LogFormat& mFormat;
         std::ostringstream mMessage;
 
     private:
@@ -71,25 +64,25 @@ public:
     void setWriter(LogWriter& writer);
     void setFormat(const std::string& format);
 
-    void setLevel(Level level);
-    Level getLevel() const;
+    void setLevel(LogLevel::Level level);
+    void setLevel(const LogLevel& level);
+    const LogLevel& getLevel() const;
 
-    Stream getStream(Level level, const std::string& component = "");
+    Stream getStream(const LogLevel& level, const LogComponent& component);
 
-    Stream error(const std::string& component = "");
-    Stream warning(const std::string& component = "");
-    Stream info(const std::string& component = "");
-    Stream verbose(const std::string& component = "");
-    Stream debug(const std::string& component = "");
+    Stream error(const LogComponent& component = LogComponent());
+    Stream warning(const LogComponent& component = LogComponent());
+    Stream info(const LogComponent& component = LogComponent());
+    Stream verbose(const LogComponent& component = LogComponent());
+    Stream debug(const LogComponent& component = LogComponent());
 
 private:
-    bool isLevelEnabled(Level level) const;
-    static const std::string& levelToString(Level level);
+    bool isLevelEnabled(const LogLevel& level) const;
 
 private:
     static NullWriter mNullWriter;
     LogWriter* mWriter;
-    Level mLevel;
+    LogLevel mLevel;
     LogFormat mFormat;
 };
 

@@ -1,5 +1,4 @@
 #include "soil/Log.h"
-#include "soil/LogFormat.h"
 #include <cassert>
 
 namespace soil
@@ -9,13 +8,11 @@ Log::NullWriter Log::mNullWriter;
 
 Log::Log()
     : mWriter(&mNullWriter)
-    , mLevel(Log::INFO)
 {
 }
 
 Log::Log(LogWriter& writer)
     : mWriter(&writer)
-    , mLevel(Log::INFO)
 {
 }
 
@@ -29,98 +26,74 @@ void Log::setFormat(const std::string& format)
     mFormat.setFormat(format);
 }
 
-void Log::setLevel(Log::Level level)
+void Log::setLevel(LogLevel::Level level)
 {
     mLevel = level;
 }
 
-Log::Level Log::getLevel() const
+void Log::setLevel(const LogLevel& level)
+{
+    mLevel = level;
+}
+
+const LogLevel& Log::getLevel() const
 {
     return mLevel;
 }
 
-Log::Stream Log::getStream(Log::Level level, const std::string& component)
+Log::Stream Log::getStream(const LogLevel& level, const LogComponent& component)
 {
-    return Stream(isLevelEnabled(level) ? *mWriter : mNullWriter, mFormat.header(levelToString(level), component));
+    mFormat << level;
+    mFormat << component;
+    return Stream(isLevelEnabled(level) ? *mWriter : mNullWriter, mFormat);
 }
 
-Log::Stream Log::error(const std::string& component)
+Log::Stream Log::error(const LogComponent& component)
 {
-    return getStream(ERROR, component);
+    return getStream(LogLevel::ERROR, component);
 }
 
-Log::Stream Log::warning(const std::string& component)
+Log::Stream Log::warning(const LogComponent& component)
 {
-    return getStream(WARNING, component);
+    return getStream(LogLevel::WARNING, component);
 }
 
-Log::Stream Log::info(const std::string& component)
+Log::Stream Log::info(const LogComponent& component)
 {
-    return getStream(INFO, component);
+    return getStream(LogLevel::Info, component);
 }
 
-Log::Stream Log::verbose(const std::string& component)
+Log::Stream Log::verbose(const LogComponent& component)
 {
-    return getStream(VERBOSE, component);
+    return getStream(LogLevel::VERBOSE, component);
 }
 
-Log::Stream Log::debug(const std::string& component)
+Log::Stream Log::debug(const LogComponent& component)
 {
-    return getStream(DEBUG, component);
+    return getStream(LogLevel::DEBUG, component);
 }
 
-bool Log::isLevelEnabled(Log::Level level) const
+bool Log::isLevelEnabled(const LogLevel& level) const
 {
-    return level <= mLevel; 
-}
-
-const std::string& Log::levelToString(Level level)
-{
-    switch (level)
-    {
-    case ERROR:
-    {
-        static std::string error = "ERROR";
-        return error;
-    }
-    case WARNING:
-    {
-        static std::string warning = "WARNING";
-        return warning;
-    }
-    case VERBOSE:
-    {
-        static std::string verbose = "VERBOSE";
-        return verbose;
-    }
-    case DEBUG:
-    {
-        static std::string debug = "DEBUG";
-        return debug;
-    }
-    case INFO:
-    default:
-    {
-        static std::string info = "INFO";
-        return info;
-    }
-    }
+    return level <= mLevel;
 }
 
 
-Log::Stream::Stream(LogWriter& writer, const std::string& header)
+Log::Stream::Stream(LogWriter& writer, LogFormat& format)
     : mWriter(writer)
+    , mFormat(format)
 {
-    mMessage << header;
 }
 
 Log::Stream::~Stream()
 {
-    mWriter.write(mMessage.str());
+    mFormat << mMessage.str();
+    mWriter.write(mFormat.get());
 }
 
 Log::Stream::Stream(const Log::Stream& stream)
     : mWriter(stream.mWriter)
+    , mFormat(stream.mFormat)
     , mMessage(stream.mMessage.str())
 {
     assert(false);

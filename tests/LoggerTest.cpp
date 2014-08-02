@@ -11,5 +11,5 @@ using namespace soil;
 TEST(LoggerTest, test)
 {
     Log& log = Logger::get();
-    ASSERT_EQ(Log::INFO, log.getLevel());
+    ASSERT_EQ(LogLevel::Info, log.getLevel());
 }

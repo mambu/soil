@@ -25,10 +25,10 @@ TEST(LogTest, test1)
 {
     TestLogWriter logWriter;
     Log log(logWriter);
-    ASSERT_EQ(Log::INFO, log.getLevel());
+    ASSERT_EQ(LogLevel::Info, log.getLevel());
 
-    log.setLevel(Log::DEBUG);
-    ASSERT_EQ(Log::DEBUG, log.getLevel());
+    log.setLevel(LogLevel::DEBUG);
+    ASSERT_EQ(LogLevel::Debug, log.getLevel());
 }
 
 TEST(LogTest, test2)
@@ -37,7 +37,7 @@ TEST(LogTest, test2)
     Log log(logWriter);
     log.info() << "hello" << " " << "world";
 
-    ASSERT_EQ("INFO: hello world", logWriter.mMessage);
+    ASSERT_EQ("INFO:  hello world", logWriter.mMessage);
 }
 
 TEST(LogTest, test3)
@@ -53,23 +53,28 @@ TEST(LogTest, test4)
 {
     TestLogWriter logWriter;
     Log log(logWriter);
-    log.setLevel(Log::VERBOSE);
+    log.setLevel(LogLevel::VERBOSE);
     log.verbose() << "hello";
 
-    ASSERT_EQ("VERBOSE: hello", logWriter.mMessage);
+    ASSERT_EQ("VERBOSE:  hello", logWriter.mMessage);
 }
 
 TEST(LogTest, testFormat)
 {
     TestLogWriter logWriter;
     Log log(logWriter);
-    log.setFormat("%l - %c: ");
+    log.setFormat("%l - %c: %m");
     log.info("comp") << "hello";
 
     ASSERT_EQ("INFO - comp: hello", logWriter.mMessage);
+}
 
-    log.setFormat("%l - %(_) c");
+TEST(LogTest, testFormatNoMessage)
+{
+    TestLogWriter logWriter;
+    Log log(logWriter);
+    log.setFormat("%l - (%c)");
     log.info("comp") << "hello";
 
-    ASSERT_EQ("INFO - (comp) hello", logWriter.mMessage);
+    ASSERT_EQ("INFO - (comp)", logWriter.mMessage);
 }
