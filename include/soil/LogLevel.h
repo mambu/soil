@@ -10,7 +10,7 @@
 #ifndef SOIL_LOGLEVEL_H
 #define SOIL_LOGLEVEL_H
 
-#include <string>
+#include <iosfwd>
 
 namespace soil
 {

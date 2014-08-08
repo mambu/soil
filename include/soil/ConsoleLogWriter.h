@@ -11,6 +11,7 @@
 #define SOIL_CONSOLELOGWRITER_H
 
 #include "soil/LogWriter.h"
+#include <string>
 #include <iostream>
 
 namespace soil
@@ -19,11 +20,13 @@ namespace soil
 class ConsoleLogWriter : public LogWriter
 {
 public:
-    inline void write(const std::string& message)
-    {
-        std::cout << message;
-    }
+    void write(const std::string& message);
 };
+
+inline void ConsoleLogWriter::write(const std::string& message)
+{
+    std::cout << message;
+}
 
 } // namespace soil
 

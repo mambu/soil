@@ -1,4 +1,5 @@
 #include "soil/LogLevel.h"
+#include <string>
 
 namespace soil
 {

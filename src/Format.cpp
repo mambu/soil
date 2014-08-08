@@ -32,10 +32,6 @@ std::string Format::get()
             {
                 os << i->second;
             }
-//            else
-//            {
-//                os << it->getSpecifier();
-//            }
         }
         else
         {
@@ -44,6 +40,13 @@ std::string Format::get()
     }
     mValues.clear();
     return os.str();
+}
+
+template <>
+Format& operator<< <std::string>(Format& format, const Format::Element<std::string>& item)
+{
+    format.set(item.getKey(), item.getElem());
+    return format;
 }
 
 } // namespace soil

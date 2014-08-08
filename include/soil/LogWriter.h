@@ -10,7 +10,7 @@
 #ifndef SOIL_LOGWRITER_H
 #define SOIL_LOGWRITER_H
 
-#include <string>
+#include <iosfwd>
 
 namespace soil
 {

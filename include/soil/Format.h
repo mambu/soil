@@ -52,6 +52,10 @@ protected:
     FormatString mFormat;
     typedef std::map<char, std::string> Values;
     Values mValues;
+
+private:
+    template <class T>
+    friend Format& operator<<(Format& format, const Format::Element<T>& item);
 };
 
 template <class T>
@@ -62,6 +66,9 @@ Format& operator<<(Format& format, const Format::Element<T>& item)
     format.set(item.getKey(), os.str());
     return format;
 }
+
+template <>
+Format& operator<< <std::string>(Format& format, const Format::Element<std::string>& item);
 
 } // namespace soil
 

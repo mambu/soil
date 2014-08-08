@@ -8,6 +8,17 @@
 
 using namespace soil;
 
+TEST(FormatStringTest, testNoSpecifier)
+{
+    FormatString s("abcd");
+    ASSERT_EQ(1U, s.size());
+
+    FormatString::iterator it = s.begin();
+    ASSERT_FALSE(it->isSpecifier());
+    ASSERT_EQ("abcd", it->getString());
+    ASSERT_EQ("", it->getModifier());
+}
+
 TEST(FormatStringTest, testEscapeDelimiter)
 {
     FormatString s("%%");
@@ -30,7 +41,37 @@ TEST(FormatStringTest, testEscapeDelimiter)
     ASSERT_EQ("", it->getModifier());
 }
 
-TEST(FormatStringTest, testStandardLogFormat)
+TEST(FormatStringTest, testSingleSpecifier)
+{
+    FormatString s("%l");
+    ASSERT_EQ(1U, s.size());
+
+    FormatString::iterator it = s.begin();
+    ASSERT_TRUE(it->isSpecifier());
+    ASSERT_EQ('l', it->getSpecifier());
+    ASSERT_EQ("", it->getModifier());
+}
+
+TEST(FormatStringTest, testMultipleSpecifiers)
+{
+    FormatString s("%a%A%b");
+    ASSERT_EQ(3U, s.size());
+
+    FormatString::iterator it = s.begin();
+    ASSERT_TRUE(it->isSpecifier());
+    ASSERT_EQ('a', it->getSpecifier());
+    ASSERT_EQ("", it->getModifier());
+    ++it;
+    ASSERT_TRUE(it->isSpecifier());
+    ASSERT_EQ('A', it->getSpecifier());
+    ASSERT_EQ("", it->getModifier());
+    ++it;
+    ASSERT_TRUE(it->isSpecifier());
+    ASSERT_EQ('b', it->getSpecifier());
+    ASSERT_EQ("", it->getModifier());
+}
+
+TEST(FormatStringTest, testComplexFormat)
 {
     FormatString s("%l: %[_] c");
     ASSERT_EQ(3U, s.size());

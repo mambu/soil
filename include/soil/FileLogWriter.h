@@ -11,6 +11,7 @@
 #define SOIL_FILELOGWRITER_H
 
 #include "soil/LogWriter.h"
+#include <string>
 #include <fstream>
 
 namespace soil
@@ -21,14 +22,16 @@ class FileLogWriter : public LogWriter
 public:
     FileLogWriter(const std::string& filename, bool append = false);
 
-    inline void write(const std::string& message)
-    {
-        mFile << message;
-    }
+    void write(const std::string& message);
 
 private:
     std::ofstream mFile;
 };
+
+inline void FileLogWriter::write(const std::string& message)
+{
+    mFile << message;
+}
 
 } // namespace soil
 

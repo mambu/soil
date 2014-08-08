@@ -18,7 +18,7 @@ namespace soil
 
 class FormatString
 {
-public:
+private:
     class Format
     {
     public:
