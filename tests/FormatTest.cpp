@@ -11,60 +11,67 @@ using namespace soil;
 TEST(FormatTest, testPlainString)
 {
     Format f("abcd");
-    ASSERT_EQ("abcd", f.get());
-    
-    f.set('c', "CCC");
-    ASSERT_EQ("abcd", f.get());
+    ASSERT_EQ("abcd", f.get(Format::Map()));
+
+    Format::Map m;
+    m.set('c', "CCC");
+    ASSERT_EQ("abcd", f.get(m));
 }
 
 TEST(FormatTest, testSingleSpecifier)
 {
     Format f("%c");
-    f.set('c', "CCC");
+    Format::Map m;
+    m.set('c', "CCC");
 
-    ASSERT_EQ("CCC", f.get());
+    ASSERT_EQ("CCC", f.get(m));
 }
 
 TEST(FormatTest, testMixed)
 {
     Format f("ab%cd");
-    f.set('c', "CCC");
+    Format::Map m;
+    m.set('c', "CCC");
 
-    ASSERT_EQ("abCCCd", f.get());
+    ASSERT_EQ("abCCCd", f.get(m));
 }
 
 TEST(FormatTest, testUnsetValue)
 {
     Format f("ab%c%d%%");
-    f.set('c', "CCC");
+    Format::Map m;
+    m.set('c', "CCC");
     // d is missing
-    ASSERT_EQ("abCCC%", f.get());
+    ASSERT_EQ("abCCC%", f.get(m));
 }
 
 TEST(FormatTest, testSetMultipleTimes)
 {
     Format f("ab%cd");
-    f.set('c', "CCC");
-    f.set('c', "CCCCC");
+    Format::Map m;
+    m.set('c', "CCC");
+    m.set('c', "CCCCC");
 
-    ASSERT_EQ("abCCCCCd", f.get());
+    ASSERT_EQ("abCCCCCd", f.get(m));
 }
 
 TEST(FormatTest, testFormatElem)
 {
     Format f("abc%d%f");
-    f << Format::element('d', 1);
-    f << Format::element('f', 1.1);
+    Format::Map m;
+    m << Format::element('d', 1);
+    m << Format::element('f', 1.1);
 
-    ASSERT_EQ("abc11.1", f.get());
+    ASSERT_EQ("abc11.1", f.get(m));
 }
 
 TEST(FormatTest, testFormatString)
 {
     Format f("abc %s's");
-    f << Format::element('s', std::string("hello"));
+    Format::Map m;
+    m << Format::element('s', std::string("hello"));
 
-    ASSERT_EQ("abc hello's", f.get());
+    ASSERT_EQ("abc hello's", f.get(m));
 }
 
 class FormatTestComplexElem
@@ -89,8 +96,9 @@ std::ostream& operator<<(std::ostream& os, const FormatTestComplexElem& e)
 TEST(FormatTest, testComplexElem)
 {
     Format f("abc%A %C");
-    f << Format::element('A', 1);
-    f << Format::element('C', FormatTestComplexElem(1,2,3));
+    Format::Map m;
+    m << Format::element('A', 1);
+    m << Format::element('C', FormatTestComplexElem(1,2,3));
 
-    ASSERT_EQ("abc1 1-2-3", f.get());
+    ASSERT_EQ("abc1 1-2-3", f.get(m));
 }

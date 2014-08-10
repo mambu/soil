@@ -26,13 +26,20 @@ private:
     class Stream
     {
     public:
-        Stream(LogWriter& writer, LogFormat& format);
+        Stream(LogWriter& writer);
         Stream(const Stream& stream);
         virtual ~Stream();
 
         inline Stream& operator<<(std::ostream& (*f)(std::ostream&))
         {
             f(mMessage);
+            return *this;
+        }
+
+        template <class T>
+        inline Stream& operator<<(const Format::Element<T>& value)
+        {    
+            mFormatMap << value;
             return *this;
         }
 
@@ -45,7 +52,7 @@ private:
 
     private:
         LogWriter& mWriter;
-        LogFormat& mFormat;
+        LogFormat::Map mFormatMap;
         std::ostringstream mMessage;
 
     private:
@@ -62,7 +69,6 @@ public:
     Log(LogWriter& writer);
 
     void setWriter(LogWriter& writer);
-    void setFormat(const std::string& format);
 
     void setLevel(const LogLevel& level);
     const LogLevel& getLevel() const;
@@ -82,7 +88,6 @@ private:
     static NullWriter mNullWriter;
     LogWriter* mWriter;
     LogLevel mLevel;
-    LogFormat mFormat;
 };
 
 } // namespace soil

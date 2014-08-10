@@ -16,7 +16,7 @@ namespace soil
 
 class Format
 {
-private:
+public:
     template <class T>
     class Element
     {
@@ -34,13 +34,26 @@ private:
         const T& mElem;
     };
 
+    typedef std::map<char, std::string> Values;
+public:
+    class Map : public Values
+    {
+    public:
+        inline void set(char key, const std::string& value)
+        {
+            (*this)[key] = value;
+        }
+
+    private:
+        template <class T>
+        friend Map& operator<<(Map& format, const Format::Element<T>& item);
+    };
+
 public:
     Format(const std::string& format);
     void setFormat(const std::string& format);
 
-    void set(char key, const std::string& value);
-
-    std::string get();
+    std::string get(const Map& map);
 
     template <class T>
     static Element<T> element(char c, const T& elem)
@@ -48,27 +61,21 @@ public:
         return Element<T>(c, elem);
     }
 
-protected:
-    FormatString mFormat;
-    typedef std::map<char, std::string> Values;
-    Values mValues;
-
 private:
-    template <class T>
-    friend Format& operator<<(Format& format, const Format::Element<T>& item);
+    FormatString mFormat;
 };
 
 template <class T>
-Format& operator<<(Format& format, const Format::Element<T>& item)
+Format::Map& operator<<(Format::Map& formatMap, const Format::Element<T>& item)
 {
     std::ostringstream os;
     os << item.getElem();
-    format.set(item.getKey(), os.str());
-    return format;
+    formatMap.set(item.getKey(), os.str());
+    return formatMap;
 }
 
 template <>
-Format& operator<< <std::string>(Format& format, const Format::Element<std::string>& item);
+Format::Map& operator<< <std::string>(Format::Map& formatMap, const Format::Element<std::string>& item);
 
 } // namespace soil
 

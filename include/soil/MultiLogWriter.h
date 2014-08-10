@@ -22,7 +22,10 @@ public:
     MultiLogWriter& add(LogWriter& writer);
     MultiLogWriter& remove(LogWriter& writer);
 
-    void write(const std::string& message);
+    virtual void write(const LogFormat::Map& formatMap);
+
+private:
+    virtual void write(const std::string& message);
     
 private:
     std::vector<LogWriter*> mItems;

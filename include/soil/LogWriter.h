@@ -10,7 +10,7 @@
 #ifndef SOIL_LOGWRITER_H
 #define SOIL_LOGWRITER_H
 
-#include <iosfwd>
+#include "LogFormat.h"
 
 namespace soil
 {
@@ -20,7 +20,14 @@ class LogWriter
 public:
     virtual ~LogWriter() {}
 
+    void setFormat(const LogFormat& logFormat);
+    virtual void write(const LogFormat::Map& formatMap);
+
+private:
     virtual void write(const std::string& message) = 0;
+
+private:
+    LogFormat mFormat;
 };
 
 } // namespace soil

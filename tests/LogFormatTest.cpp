@@ -13,37 +13,42 @@ using namespace soil;
 
 TEST(LogFormatTest, testLogLevel)
 {
-    LogFormat f;
-    f << LogLevel::Verbose;
+    LogFormat::Map m;
+    m << LogLevel::Verbose;
 
-    ASSERT_EQ("VERBOSE:  ", f.get());
+    LogFormat f;
+    ASSERT_EQ("VERBOSE:  ", f.get(m));
 }
 
 TEST(LogFormatTest, testLogComponent)
 {
-    LogFormat f;
-    f << LogComponent("component1");
-    f << LogLevel::Warning;
+    LogFormat::Map m;
+    m << LogComponent("component1");
+    m << LogLevel::Warning;
 
-    ASSERT_EQ("WARNING: component1 ", f.get());
+    LogFormat f;
+    ASSERT_EQ("WARNING: component1 ", f.get(m));
 }
 
 TEST(LogFormatTest, testLogMessage)
 {
-    LogFormat f;
-    f << LogMessage("msg #1");
-    f << LogComponent("component1");
-    f << LogLevel::Warning;
+    LogFormat::Map m;
+    m << LogMessage("msg #1");
+    m << LogComponent("component1");
+    m << LogLevel::Warning;
 
-    ASSERT_EQ("WARNING: component1 msg #1", f.get());
+    LogFormat f;
+    ASSERT_EQ("WARNING: component1 msg #1", f.get(m));
 }
 
 TEST(LogFormatTest, testCustomFormat)
 {
-    LogFormat f("(%l) %c - [%m]");
-    f << LogMessage("msg #1");
-    f << LogComponent("component1");
-    f << LogLevel::Warning;
+    LogFormat::Map m;
+    m << LogMessage("msg #1");
+    m << LogComponent("component1");
+    m << LogLevel::Warning;
 
-    ASSERT_EQ("(WARNING) component1 - [msg #1]", f.get());
+    LogFormat f("(%l) %c - [%m]");
+
+    ASSERT_EQ("(WARNING) component1 - [msg #1]", f.get(m));
 }

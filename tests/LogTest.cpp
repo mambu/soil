@@ -10,6 +10,8 @@
 
 using namespace soil;
 
+namespace
+{
 class TestLogWriter : public LogWriter
 {
 public:
@@ -20,6 +22,7 @@ public:
 
     std::string mMessage;
 };
+}
 
 TEST(LogTest, test1)
 {
@@ -62,8 +65,8 @@ TEST(LogTest, test4)
 TEST(LogTest, testFormat)
 {
     TestLogWriter logWriter;
+    logWriter.setFormat(LogFormat("%l - %c: %m"));
     Log log(logWriter);
-    log.setFormat("%l - %c: %m");
     log.info("comp") << "hello";
 
     ASSERT_EQ("INFO - comp: hello", logWriter.mMessage);
@@ -72,9 +75,22 @@ TEST(LogTest, testFormat)
 TEST(LogTest, testFormatNoMessage)
 {
     TestLogWriter logWriter;
+    logWriter.setFormat(LogFormat("%l - (%c)"));
     Log log(logWriter);
-    log.setFormat("%l - (%c)");
     log.info("comp") << "hello";
 
     ASSERT_EQ("INFO - (comp)", logWriter.mMessage);
+}
+
+TEST(LogTest, testFormatElement)
+{
+    TestLogWriter logWriter;
+    logWriter.setFormat(LogFormat("%d%l - (%c) %m"));
+    Log log(logWriter);
+
+    log.info("comp") << "hello";
+    ASSERT_EQ("INFO - (comp) hello", logWriter.mMessage);
+
+    log.info("comp") << "hello" << LogFormat::element('d', "debug:");
+    ASSERT_EQ("debug:INFO - (comp) hello", logWriter.mMessage);
 }

@@ -24,11 +24,6 @@ void Log::setWriter(LogWriter& writer)
     mWriter = &writer;
 }
 
-void Log::setFormat(const std::string& format)
-{
-    mFormat.setFormat(format);
-}
-
 void Log::setLevel(const LogLevel& level)
 {
     mLevel = level;
@@ -41,9 +36,10 @@ const LogLevel& Log::getLevel() const
 
 Log::Stream Log::getStream(const LogLevel& level, const LogComponent& component)
 {
-    mFormat << level;
-    mFormat << component;
-    return Stream(isLevelEnabled(level) ? *mWriter : mNullWriter, mFormat);
+    Stream s(isLevelEnabled(level) ? *mWriter : mNullWriter);
+    s.mFormatMap << level;
+    s.mFormatMap << component;
+    return s;
 }
 
 Log::Stream Log::error(const LogComponent& component)
@@ -77,21 +73,19 @@ bool Log::isLevelEnabled(const LogLevel& level) const
 }
 
 
-Log::Stream::Stream(LogWriter& writer, LogFormat& format)
+Log::Stream::Stream(LogWriter& writer)
     : mWriter(writer)
-    , mFormat(format)
 {
 }
 
 Log::Stream::~Stream()
 {
-    mFormat << LogMessage(mMessage.str());
-    mWriter.write(mFormat.get());
+    mFormatMap << LogMessage(mMessage.str());
+    mWriter.write(mFormatMap);
 }
 
 Log::Stream::Stream(const Log::Stream& stream)
     : mWriter(stream.mWriter)
-    , mFormat(stream.mFormat)
     , mMessage(stream.mMessage.str())
 {
     assert(false);

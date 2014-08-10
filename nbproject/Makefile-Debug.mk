@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Log.o \
 	${OBJECTDIR}/src/LogFormat.o \
 	${OBJECTDIR}/src/LogLevel.o \
+	${OBJECTDIR}/src/LogWriter.o \
 	${OBJECTDIR}/src/MultiLogWriter.o
 
 # Test Directory
@@ -49,12 +50,12 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f2 \
-	${TESTDIR}/TestFiles/f6 \
-	${TESTDIR}/TestFiles/f4 \
-	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f3 \
-	${TESTDIR}/TestFiles/testapp
+	${TESTDIR}/TestFiles/AnsiTermTest \
+	${TESTDIR}/TestFiles/FormatTest \
+	${TESTDIR}/TestFiles/LoggerTest \
+	${TESTDIR}/TestFiles/LogTest \
+	${TESTDIR}/TestFiles/SingletonTest \
+	${TESTDIR}/TestFiles/TestApp
 
 # C Compiler Flags
 CFLAGS=
@@ -117,6 +118,11 @@ ${OBJECTDIR}/src/LogLevel.o: src/LogLevel.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogLevel.o src/LogLevel.cpp
 
+${OBJECTDIR}/src/LogWriter.o: src/LogWriter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogWriter.o src/LogWriter.cpp
+
 ${OBJECTDIR}/src/MultiLogWriter.o: src/MultiLogWriter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -127,29 +133,29 @@ ${OBJECTDIR}/src/MultiLogWriter.o: src/MultiLogWriter.cpp
 
 # Build Test Targets
 .build-tests-conf: .build-conf ${TESTFILES}
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/AnsiTermTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/AnsiTermTest: ${TESTDIR}/tests/AnsiTermTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/AnsiTermTest $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/FormatStringTest.o ${TESTDIR}/tests/FormatTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/FormatTest: ${TESTDIR}/tests/FormatStringTest.o ${TESTDIR}/tests/FormatTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/FormatTest $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/LoggerTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/LoggerTest: ${TESTDIR}/tests/LoggerTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/LoggerTest $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/LogFormatTest.o ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/LogTest: ${TESTDIR}/tests/LogFormatTest.o ${TESTDIR}/tests/LogTest.o ${TESTDIR}/tests/MultiLogWriter.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/LogTest $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/SingletonTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/SingletonTest: ${TESTDIR}/tests/SingletonTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/SingletonTest $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/testapp: ${TESTDIR}/tests/TestApp.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/TestApp: ${TESTDIR}/tests/TestApp.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/testapp $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/TestApp $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
 
 ${TESTDIR}/tests/AnsiTermTest.o: tests/AnsiTermTest.cpp 
@@ -186,6 +192,12 @@ ${TESTDIR}/tests/LogTest.o: tests/LogTest.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -Iinclude -I. -I. -I. -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogTest.o tests/LogTest.cpp
+
+
+${TESTDIR}/tests/MultiLogWriter.o: tests/MultiLogWriter.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -Iinclude -I. -I. -I. -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/MultiLogWriter.o tests/MultiLogWriter.cpp
 
 
 ${TESTDIR}/tests/SingletonTest.o: tests/SingletonTest.cpp 
@@ -291,6 +303,19 @@ ${OBJECTDIR}/src/LogLevel_nomain.o: ${OBJECTDIR}/src/LogLevel.o src/LogLevel.cpp
 	    ${CP} ${OBJECTDIR}/src/LogLevel.o ${OBJECTDIR}/src/LogLevel_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/LogWriter_nomain.o: ${OBJECTDIR}/src/LogWriter.o src/LogWriter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/LogWriter.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogWriter_nomain.o src/LogWriter.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/LogWriter.o ${OBJECTDIR}/src/LogWriter_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/MultiLogWriter_nomain.o: ${OBJECTDIR}/src/MultiLogWriter.o src/MultiLogWriter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/MultiLogWriter.o`; \
@@ -308,12 +333,12 @@ ${OBJECTDIR}/src/MultiLogWriter_nomain.o: ${OBJECTDIR}/src/MultiLogWriter.o src/
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f2 || true; \
-	    ${TESTDIR}/TestFiles/f6 || true; \
-	    ${TESTDIR}/TestFiles/f4 || true; \
-	    ${TESTDIR}/TestFiles/f1 || true; \
-	    ${TESTDIR}/TestFiles/f3 || true; \
-	    ${TESTDIR}/TestFiles/testapp || true; \
+	    ${TESTDIR}/TestFiles/AnsiTermTest || true; \
+	    ${TESTDIR}/TestFiles/FormatTest || true; \
+	    ${TESTDIR}/TestFiles/LoggerTest || true; \
+	    ${TESTDIR}/TestFiles/LogTest || true; \
+	    ${TESTDIR}/TestFiles/SingletonTest || true; \
+	    ${TESTDIR}/TestFiles/TestApp || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

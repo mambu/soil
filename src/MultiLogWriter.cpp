@@ -14,13 +14,17 @@ MultiLogWriter& MultiLogWriter::remove(LogWriter& writer)
     return *this;
 }
 
-void MultiLogWriter::write(const std::string& message)
+void MultiLogWriter::write(const LogFormat::Map& formatMap)
 {
     // TODO: use auto in C++11
     for (std::vector<LogWriter*>::iterator it = mItems.begin(); it != mItems.end(); ++it)
     {
-        (*it)->write(message);
+        (*it)->write(formatMap);
     }
+}
+
+void MultiLogWriter::write(const std::string& message)
+{
 }
 
 } // namespace soil

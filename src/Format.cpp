@@ -13,12 +13,7 @@ void Format::setFormat(const std::string& format)
     mFormat.setFormat(format);
 }
 
-void Format::set(char key, const std::string& value)
-{
-    mValues[key] = value;
-}
-
-std::string Format::get()
+std::string Format::get(const Format::Map& map)
 {
     std::ostringstream os;
     for (FormatString::iterator it = mFormat.begin();
@@ -27,8 +22,8 @@ std::string Format::get()
     {
         if (it->isSpecifier())
         {
-            Values::const_iterator i = mValues.find(it->getSpecifier());
-            if (i != mValues.end())
+            Values::const_iterator i = map.find(it->getSpecifier());
+            if (i != map.end())
             {
                 os << i->second;
             }
@@ -38,15 +33,14 @@ std::string Format::get()
             os << it->getString();
         }
     }
-    mValues.clear();
     return os.str();
 }
 
 template <>
-Format& operator<< <std::string>(Format& format, const Format::Element<std::string>& item)
+Format::Map& operator<< <std::string>(Format::Map& formatMap, const Format::Element<std::string>& item)
 {
-    format.set(item.getKey(), item.getElem());
-    return format;
+    formatMap.set(item.getKey(), item.getElem());
+    return formatMap;
 }
 
 } // namespace soil

@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Log.o \
 	${OBJECTDIR}/src/LogFormat.o \
 	${OBJECTDIR}/src/LogLevel.o \
+	${OBJECTDIR}/src/LogWriter.o \
 	${OBJECTDIR}/src/MultiLogWriter.o
 
 # Test Directory
@@ -117,6 +118,11 @@ ${OBJECTDIR}/src/LogLevel.o: src/LogLevel.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogLevel.o src/LogLevel.cpp
 
+${OBJECTDIR}/src/LogWriter.o: src/LogWriter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogWriter.o src/LogWriter.cpp
+
 ${OBJECTDIR}/src/MultiLogWriter.o: src/MultiLogWriter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -139,7 +145,7 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/LoggerTest.o ${OBJECTFILES:%.o=%_nomai
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/LogFormatTest.o ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/LogFormatTest.o ${TESTDIR}/tests/LogTest.o ${TESTDIR}/tests/MultiLogWriter.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lpthread -lgtest_main -lgtest 
 
@@ -186,6 +192,12 @@ ${TESTDIR}/tests/LogTest.o: tests/LogTest.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -I. -I. -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogTest.o tests/LogTest.cpp
+
+
+${TESTDIR}/tests/MultiLogWriter.o: tests/MultiLogWriter.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -Iinclude -I. -I. -I. -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/MultiLogWriter.o tests/MultiLogWriter.cpp
 
 
 ${TESTDIR}/tests/SingletonTest.o: tests/SingletonTest.cpp 
@@ -289,6 +301,19 @@ ${OBJECTDIR}/src/LogLevel_nomain.o: ${OBJECTDIR}/src/LogLevel.o src/LogLevel.cpp
 	    $(COMPILE.cc) -O2 -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogLevel_nomain.o src/LogLevel.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/LogLevel.o ${OBJECTDIR}/src/LogLevel_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/LogWriter_nomain.o: ${OBJECTDIR}/src/LogWriter.o src/LogWriter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/LogWriter.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Wall -Iinclude -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogWriter_nomain.o src/LogWriter.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/LogWriter.o ${OBJECTDIR}/src/LogWriter_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/MultiLogWriter_nomain.o: ${OBJECTDIR}/src/MultiLogWriter.o src/MultiLogWriter.cpp 

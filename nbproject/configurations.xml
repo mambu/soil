@@ -37,6 +37,7 @@
       <itemPath>src/Log.cpp</itemPath>
       <itemPath>src/LogFormat.cpp</itemPath>
       <itemPath>src/LogLevel.cpp</itemPath>
+      <itemPath>src/LogWriter.cpp</itemPath>
       <itemPath>src/MultiLogWriter.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -65,6 +66,7 @@
       <logicalFolder name="f1" displayName="LogTest" projectFiles="true" kind="TEST">
         <itemPath>tests/LogFormatTest.cpp</itemPath>
         <itemPath>tests/LogTest.cpp</itemPath>
+        <itemPath>tests/MultiLogWriter.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
                      displayName="SingletonTest"
@@ -133,7 +135,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f1</output>
+          <output>${TESTDIR}/TestFiles/LogTest</output>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f2">
@@ -150,7 +152,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
+          <output>${TESTDIR}/TestFiles/AnsiTermTest</output>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f3">
@@ -165,7 +167,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
+          <output>${TESTDIR}/TestFiles/SingletonTest</output>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f4">
@@ -180,7 +182,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
+          <output>${TESTDIR}/TestFiles/LoggerTest</output>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f5">
@@ -195,7 +197,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/testapp</output>
+          <output>${TESTDIR}/TestFiles/TestApp</output>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f6">
@@ -210,7 +212,22 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
+          <output>${TESTDIR}/TestFiles/FormatTest</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
         </linkerTool>
       </folder>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
@@ -259,6 +276,8 @@
       </item>
       <item path="src/LogLevel.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/LogWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/MultiLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/AnsiTermTest.cpp" ex="false" tool="1" flavor2="0">
@@ -272,6 +291,8 @@
       <item path="tests/LogTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/LoggerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/MultiLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/SingletonTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -413,6 +434,21 @@
           <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Configuration.h" ex="false" tool="3" flavor2="0">
@@ -459,6 +495,8 @@
       </item>
       <item path="src/LogLevel.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/LogWriter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/MultiLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/AnsiTermTest.cpp" ex="false" tool="1" flavor2="0">
@@ -472,6 +510,8 @@
       <item path="tests/LogTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/LoggerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/MultiLogWriter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/SingletonTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

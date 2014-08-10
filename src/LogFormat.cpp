@@ -12,19 +12,19 @@ LogFormat::LogFormat(const std::string& format)
 {
 }
 
-LogFormat& operator<<(LogFormat& format, const LogLevel& item)
+LogFormat::Map& operator<<(LogFormat::Map& format, const LogLevel& item)
 {
     format.set('l', item.toString());
     return format;
 }
 
-LogFormat& operator<<(LogFormat& format, const LogComponent& item)
+LogFormat::Map& operator<<(LogFormat::Map& format, const LogComponent& item)
 {
     format.set('c', item);
     return format;
 }
 
-LogFormat& operator<<(LogFormat& format, const LogMessage& item)
+LogFormat::Map& operator<<(LogFormat::Map& format, const LogMessage& item)
 {
     format.set('m', item);
     return format;

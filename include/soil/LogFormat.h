@@ -25,9 +25,9 @@ public:
     LogFormat(const std::string& format = "%l: %c %m");
 };
 
-LogFormat& operator<<(LogFormat& format, const LogLevel& item);
-LogFormat& operator<<(LogFormat& format, const LogComponent& item);
-LogFormat& operator<<(LogFormat& format, const LogMessage& item);
+LogFormat::Map& operator<<(LogFormat::Map& format, const LogLevel& item);
+LogFormat::Map& operator<<(LogFormat::Map& format, const LogComponent& item);
+LogFormat::Map& operator<<(LogFormat::Map& format, const LogMessage& item);
 
 } // namespace soil
 
