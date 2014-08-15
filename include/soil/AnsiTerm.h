@@ -19,47 +19,61 @@ namespace soil
 class AnsiTerm
 {
 public:
-    enum Attribute
+    enum class Style
     {
-        RESET     = 0,
-        BRIGHT    = 1,
-        DIM       = 2,
-        UNDERLINE = 3,
-        BLINK     = 4,
-        REVERSE   = 7,
-        HIDDEN    = 8,
-        NO_ATTR   = 99
+        FONT_BRIGHT,
+        FONT_DIM,
+        FONT_NORMAL,
+        UNDERLINE,
+        NO_UNDERLINE,
+        BLINK,
+        NO_BLINK,
+        REVERSE,
+        NO_REVERSE,
+        HIDDEN,
+        NO_HIDDEN,
+        CROSSED,
+        NO_CROSSED,
+        NONE
     };
 
-    enum Colour
+    enum class Colour : char
     {
-        BLACK   = 0,
-        RED     = 1,
-        GREEN   = 2,
-        YELLOW  = 3,
-        BLUE    = 4,
-        MAGENTA = 5,
-        CYAN    = 6,
-        WHITE   = 7,
-        NO_COLOUR= 99              
+        BLACK   = '0',
+        RED     = '1',
+        GREEN   = '2',
+        YELLOW  = '3',
+        BLUE    = '4',
+        MAGENTA = '5',
+        CYAN    = '6',
+        WHITE   = '7',
+        NONE    = '9'              
     };
 
-    static std::string format(Attribute attribute, Colour foreground, Colour background);
+    static std::string format(Style style, Colour foreground, Colour background);
     static std::string reset();
 
-    static std::string attr(Attribute attribute);
+    static std::string style(Style style);
     static std::string fg(Colour c);
     static std::string bg(Colour c);
 
     // ostream formatters
     // attributes
     static std::ostream& reset (std::ostream& os);
-    static std::ostream& bright (std::ostream& os);
-    static std::ostream& dim (std::ostream& os);
+
+    static std::ostream& fontbright (std::ostream& os);
+    static std::ostream& fontdim (std::ostream& os);
+    static std::ostream& fontnormal (std::ostream& os);
     static std::ostream& underline (std::ostream& os);
+    static std::ostream& nounderline (std::ostream& os);
     static std::ostream& blink (std::ostream& os);
+    static std::ostream& noblink (std::ostream& os);
     static std::ostream& reverse (std::ostream& os);
+    static std::ostream& noreverse (std::ostream& os);
     static std::ostream& hidden (std::ostream& os);
+    static std::ostream& nohidden (std::ostream& os);
+    static std::ostream& crossed (std::ostream& os);
+    static std::ostream& nocrossed (std::ostream& os);
     // foreground colours
     static std::ostream& fgBlack (std::ostream& os);
     static std::ostream& fgRed (std::ostream& os);
@@ -69,6 +83,7 @@ public:
     static std::ostream& fgMagenta (std::ostream& os);
     static std::ostream& fgCyan (std::ostream& os);
     static std::ostream& fgWhite (std::ostream& os);
+    static std::ostream& fgReset (std::ostream& os);
     // background colours
     static std::ostream& bgBlack (std::ostream& os);
     static std::ostream& bgRed (std::ostream& os);
@@ -78,10 +93,11 @@ public:
     static std::ostream& bgMagenta (std::ostream& os);
     static std::ostream& bgCyan (std::ostream& os);
     static std::ostream& bgWhite (std::ostream& os);
+    static std::ostream& bgReset (std::ostream& os);
 
 private:
-    static std::string command();
-    static std::string attrString(Attribute attr);
+    static const std::string csi;
+    static std::string styleString(Style attr);
     static std::string fgString(Colour c);
     static std::string bgString(Colour c);
 };

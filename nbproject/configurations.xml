@@ -97,9 +97,16 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
+          <standard>8</standard>
           <incDir>
             <pElem>include</pElem>
+            <pElem>.</pElem>
           </incDir>
           <warningLevel>2</warningLevel>
         </ccTool>
@@ -109,9 +116,9 @@
       <folder path="TestFiles">
         <linkerTool>
           <linkerLibItems>
-            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
             <linkerLibLibItem>gtest_main</linkerLibLibItem>
             <linkerLibLibItem>gtest</linkerLibLibItem>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
           </linkerLibItems>
         </linkerTool>
       </folder>
@@ -215,21 +222,6 @@
           <output>${TESTDIR}/TestFiles/FormatTest</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-        </linkerTool>
-      </folder>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/soil/Configuration.h" ex="false" tool="3" flavor2="0">
@@ -308,11 +300,16 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <standard>8</standard>
           <incDir>
             <pElem>include</pElem>
+            <pElem>.</pElem>
           </incDir>
           <warningLevel>2</warningLevel>
         </ccTool>
@@ -432,21 +429,6 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f6</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
         </linkerTool>
       </folder>
       <item path="include/soil/AnsiTerm.h" ex="false" tool="3" flavor2="0">

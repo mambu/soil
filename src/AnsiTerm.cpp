@@ -3,231 +3,258 @@
 
 namespace soil
 {
+    
+const std::string AnsiTerm::csi = "\x1B[";
 
-std::string AnsiTerm::format(AnsiTerm::Attribute attribute,
-                             AnsiTerm::Colour foreground,
-                             AnsiTerm::Colour background)
+std::string AnsiTerm::format(Style style,
+                             Colour foreground,
+                             Colour background)
 {
-    if (attribute == NO_ATTR && foreground == NO_COLOUR && background == NO_COLOUR)
+    if (style == Style::NONE
+        && foreground == Colour::NONE
+        && background == Colour::NONE)
+    {
         return reset();
+    }
 
-    std::string cmd = command();
+    std::ostringstream cmd;
+    cmd << csi;
     bool addSep = false;
-    if (attribute != NO_ATTR)
+    if (style != Style::NONE)
     {
-        cmd += attrString(attribute);
+        cmd << styleString(style);
         addSep = true;
     }
-    if (foreground != NO_COLOUR)
+    if (foreground != Colour::NONE)
     {
         if (addSep)
         {
-            cmd += ";";
+            cmd << ';';
         }
-        cmd += fgString(foreground);
+        cmd << fgString(foreground);
         addSep = true;
     }
-    if (background != NO_COLOUR)
+    if (background != Colour::NONE)
     {
         if (addSep)
         {
-            cmd += ";";
+            cmd << ';';
         }
-        cmd += bgString(background);
+        cmd << bgString(background);
     }
 
-    return cmd + "m";
+    cmd << 'm';
+    return cmd.str();
 }
 
 std::string AnsiTerm::reset()
 {
-    return command() + "0m"; 
+    return csi + "0m"; 
 }
 
-std::string AnsiTerm::attr(AnsiTerm::Attribute attribute)
+std::string AnsiTerm::style(AnsiTerm::Style style)
 {
-    return command() + attrString(attribute) + "m";
+    return csi + styleString(style) + "m";
 }
 
 std::string AnsiTerm::fg(AnsiTerm::Colour c)
 {
-    return command() + fgString(c) + "m";
+    return c == Colour::NONE ? "" : csi + fgString(c) + "m";
 }
 
 std::string AnsiTerm::bg(AnsiTerm::Colour c)
 {
-    return command() + bgString(c) + "m";
+    return c == Colour::NONE ? "" : csi + bgString(c) + "m";
 }
 
-std::ostream& AnsiTerm::reset (std::ostream& os)
+std::ostream& AnsiTerm::reset(std::ostream& os)
 {
     os << reset();
     return os;
 }
-std::ostream& AnsiTerm::bright (std::ostream& os)
+std::ostream& AnsiTerm::fontbright(std::ostream& os)
 {
-    os << attr(BRIGHT);
+    os << style(Style::FONT_BRIGHT);
     return os;
 }
-std::ostream& AnsiTerm::dim (std::ostream& os)
+std::ostream& AnsiTerm::fontdim(std::ostream& os)
 {
-    os << attr(DIM);
+    os << style(Style::FONT_DIM);
     return os;
 }
-std::ostream& AnsiTerm::underline (std::ostream& os)
+std::ostream& AnsiTerm::fontnormal(std::ostream& os)
 {
-    os << attr(UNDERLINE);
+    os << style(Style::FONT_NORMAL);
     return os;
 }
-std::ostream& AnsiTerm::blink (std::ostream& os)
+std::ostream& AnsiTerm::underline(std::ostream& os)
 {
-    os << attr(BLINK);
+    os << style(Style::UNDERLINE);
     return os;
 }
-std::ostream& AnsiTerm::reverse (std::ostream& os)
+std::ostream& AnsiTerm::nounderline(std::ostream& os)
 {
-    os << attr(REVERSE);
+    os << style(Style::NO_UNDERLINE);
     return os;
 }
-std::ostream& AnsiTerm::hidden (std::ostream& os)
+std::ostream& AnsiTerm::blink(std::ostream& os)
 {
-    os << attr(HIDDEN);
+    os << style(Style::BLINK);
+    return os;
+}
+std::ostream& AnsiTerm::noblink(std::ostream& os)
+{
+    os << style(Style::NO_BLINK);
+    return os;
+}
+std::ostream& AnsiTerm::reverse(std::ostream& os)
+{
+    os << style(Style::REVERSE);
+    return os;
+}
+std::ostream& AnsiTerm::noreverse(std::ostream& os)
+{
+    os << style(Style::NO_REVERSE);
+    return os;
+}
+std::ostream& AnsiTerm::hidden(std::ostream& os)
+{
+    os << style(Style::HIDDEN);
+    return os;
+}
+std::ostream& AnsiTerm::nohidden(std::ostream& os)
+{
+    os << style(Style::HIDDEN);
     return os;
 }
 
-std::ostream& AnsiTerm::fgBlack (std::ostream& os)
+std::ostream& AnsiTerm::fgBlack(std::ostream& os)
 {
-    os << fg(BLACK);
+    os << fg(Colour::BLACK);
     return os;
 }
-std::ostream& AnsiTerm::fgRed (std::ostream& os)
+std::ostream& AnsiTerm::fgRed(std::ostream& os)
 {
-    os << fg(RED);
+    os << fg(Colour::RED);
     return os;
 }
-std::ostream& AnsiTerm::fgGreen (std::ostream& os)
+std::ostream& AnsiTerm::fgGreen(std::ostream& os)
 {
-    os << fg(GREEN);
+    os << fg(Colour::GREEN);
     return os;
 }
-std::ostream& AnsiTerm::fgYellow (std::ostream& os)
+std::ostream& AnsiTerm::fgYellow(std::ostream& os)
 {
-   os << fg(YELLOW);
+   os << fg(Colour::YELLOW);
    return os;
 }
-std::ostream& AnsiTerm::fgBlue (std::ostream& os)
+std::ostream& AnsiTerm::fgBlue(std::ostream& os)
 {
-    os << fg(BLUE);
+    os << fg(Colour::BLUE);
     return os;
 }
-std::ostream& AnsiTerm::fgMagenta (std::ostream& os)
+std::ostream& AnsiTerm::fgMagenta(std::ostream& os)
 {
-    os << fg(MAGENTA);
+    os << fg(Colour::MAGENTA);
     return os;
 }
-std::ostream& AnsiTerm::fgCyan (std::ostream& os)
+std::ostream& AnsiTerm::fgCyan(std::ostream& os)
 {
-    os << fg(CYAN);
+    os << fg(Colour::CYAN);
     return os;
 }
-std::ostream& AnsiTerm::fgWhite (std::ostream& os)
+std::ostream& AnsiTerm::fgWhite(std::ostream& os)
 {
-    os << fg(WHITE);
+    os << fg(Colour::WHITE);
     return os;
 }
-
-std::ostream& AnsiTerm::bgBlack (std::ostream& os)
+std::ostream& AnsiTerm::fgReset(std::ostream& os)
 {
-    os << bg(BLACK);
-    return os;
-}
-std::ostream& AnsiTerm::bgRed (std::ostream& os)
-{
-    os << bg(RED);
-    return os;
-}
-std::ostream& AnsiTerm::bgGreen (std::ostream& os)
-{
-    os << bg(GREEN);
-    return os;
-}
-std::ostream& AnsiTerm::bgYellow (std::ostream& os)
-{
-    os << bg(YELLOW);
-    return os;
-}
-std::ostream& AnsiTerm::bgBlue (std::ostream& os)
-{
-    os << bg(BLUE);
-    return os;
-}
-std::ostream& AnsiTerm::bgMagenta (std::ostream& os)
-{
-    os << bg(MAGENTA);
-    return os;
-}
-std::ostream& AnsiTerm::bgCyan (std::ostream& os)
-{
-    os << bg(CYAN);
-    return os;
-}
-std::ostream& AnsiTerm::bgWhite (std::ostream& os)
-{
-    os << bg(WHITE);
+    os << fg(Colour::NONE);
     return os;
 }
 
-std::string AnsiTerm::command()
+std::ostream& AnsiTerm::bgBlack(std::ostream& os)
 {
-    static std::string cmd = "\x1B[";
-    return cmd;
+    os << bg(Colour::BLACK);
+    return os;
+}
+std::ostream& AnsiTerm::bgRed(std::ostream& os)
+{
+    os << bg(Colour::RED);
+    return os;
+}
+std::ostream& AnsiTerm::bgGreen(std::ostream& os)
+{
+    os << bg(Colour::GREEN);
+    return os;
+}
+std::ostream& AnsiTerm::bgYellow(std::ostream& os)
+{
+    os << bg(Colour::YELLOW);
+    return os;
+}
+std::ostream& AnsiTerm::bgBlue(std::ostream& os)
+{
+    os << bg(Colour::BLUE);
+    return os;
+}
+std::ostream& AnsiTerm::bgMagenta(std::ostream& os)
+{
+    os << bg(Colour::MAGENTA);
+    return os;
+}
+std::ostream& AnsiTerm::bgCyan(std::ostream& os)
+{
+    os << bg(Colour::CYAN);
+    return os;
+}
+std::ostream& AnsiTerm::bgWhite(std::ostream& os)
+{
+    os << bg(Colour::WHITE);
+    return os;
+}
+std::ostream& AnsiTerm::bgReset(std::ostream& os)
+{
+    os << bg(Colour::NONE);
+    return os;
 }
 
-std::string AnsiTerm::attrString(Attribute attr)
+
+std::string AnsiTerm::styleString(AnsiTerm::Style attr)
 {
     switch(attr)
     {
-    case RESET:     return "0";
-    case BRIGHT:    return "1";
-    case DIM:       return "2";
-    case UNDERLINE: return "3";
-    case BLINK:     return "4";
-    case REVERSE:   return "7";
-    case HIDDEN:    return "8";
+    case Style::FONT_BRIGHT:    return "1";
+    case Style::FONT_DIM:       return "2";
+    case Style::FONT_NORMAL:    return "22";
+    case Style::UNDERLINE:      return "4";
+    case Style::NO_UNDERLINE:   return "24";
+    case Style::BLINK:          return "5";
+    case Style::NO_BLINK:       return "25";
+    case Style::REVERSE:        return "7";
+    case Style::NO_REVERSE:     return "27";
+    case Style::HIDDEN:         return "8";
+    case Style::NO_HIDDEN:      return "28";
+    case Style::CROSSED:        return "9";
+    case Style::NO_CROSSED:     return "29";
     default: return "";
     }
 }
 
-std::string AnsiTerm::fgString(Colour c)
+std::string AnsiTerm::fgString(AnsiTerm::Colour c)
 {
-    switch(c)
-    {
-    case AnsiTerm::BLACK:   return "30";
-    case AnsiTerm::RED:     return "31";
-    case AnsiTerm::GREEN:   return "32";
-    case AnsiTerm::YELLOW:  return "33";
-    case AnsiTerm::BLUE:    return "34";
-    case AnsiTerm::MAGENTA: return "35";
-    case AnsiTerm::CYAN:    return "36";
-    case AnsiTerm::WHITE:   return "37";
-    default: return "";
-    }
+    std::string s(1, '3');
+    s += static_cast<char>(c);
+    return s;
 }
 
-std::string AnsiTerm::bgString(Colour c)
+std::string AnsiTerm::bgString(AnsiTerm::Colour c)
 {
-    switch(c)
-    {
-    case AnsiTerm::BLACK:   return "40";
-    case AnsiTerm::RED:     return "41";
-    case AnsiTerm::GREEN:   return "42";
-    case AnsiTerm::YELLOW:  return "43";
-    case AnsiTerm::BLUE:    return "44";
-    case AnsiTerm::MAGENTA: return "45";
-    case AnsiTerm::CYAN:    return "46";
-    case AnsiTerm::WHITE:   return "47";
-    default: return "";
-    }
+    std::string s(1, '4');
+    s += static_cast<char>(c);
+    return s;
 }
+
 
 } // namespace soil

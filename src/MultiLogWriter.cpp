@@ -16,8 +16,8 @@ MultiLogWriter& MultiLogWriter::remove(LogWriter& writer)
 
 void MultiLogWriter::write(const LogFormat::Map& formatMap)
 {
-    // TODO: use auto in C++11
-    for (std::vector<LogWriter*>::iterator it = mItems.begin(); it != mItems.end(); ++it)
+    // std::vector<LogWriter*>::iterator it
+    for (auto it = mItems.begin(); it != mItems.end(); ++it)
     {
         (*it)->write(formatMap);
     }
